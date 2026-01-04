@@ -333,7 +333,7 @@
             animation-delay: 2s;
         }
 
-        /* Music button styles */
+        /* Music button styles - FIXED VERSION */
         .music-btn {
             position: fixed;
             bottom: 30px;
@@ -351,8 +351,6 @@
             box-shadow: 0 5px 20px rgba(216, 27, 96, 0.4);
             z-index: 1000;
             transition: all 0.3s ease;
-            animation: fadeIn 1s ease 3s forwards;
-            opacity: 0;
         }
 
         .music-btn:hover {
@@ -364,16 +362,17 @@
             transform: scale(0.95);
         }
 
+        /* ✅ ROTATION ONLY WHEN PLAYING */
         .music-btn.playing {
-            animation: pulse 2s ease-in-out infinite;
+            animation: rotateDisc 2s linear infinite;
         }
 
-        @keyframes pulse {
-            0%, 100% {
-                box-shadow: 0 5px 20px rgba(216, 27, 96, 0.4);
+        @keyframes rotateDisc {
+            from {
+                transform: rotate(0deg);
             }
-            50% {
-                box-shadow: 0 5px 30px rgba(216, 27, 96, 0.8);
+            to {
+                transform: rotate(360deg);
             }
         }
 
@@ -454,7 +453,8 @@
         <div class="divider"></div>
         
         <p class="message">
-            Wishing you a day filled with love, laughter,<br>
+            Wishing you a day filled with love, laughter,
+            <br>
             and all the wonderful things you deserve!
         </p>
         
@@ -473,8 +473,8 @@
     <div class="ribbon ribbon-3"></div>
     <div class="ribbon ribbon-4"></div>
 
-    <!-- Background Music (autoplay now works because of intro page interaction!) -->
-    <audio id="bgMusic" autoplay loop>
+    <!-- Background Music -->
+    <audio id="bgMusic" loop>
         <source src="Montagem Miau.mp3" type="audio/mpeg">
     </audio>
 
@@ -508,52 +508,25 @@
             card.appendChild(sparkle);
         }
 
-        // Music control
+        // ✅ FIXED MUSIC CONTROL
         const music = document.getElementById('bgMusic');
         const musicBtn = document.getElementById('musicBtn');
         const musicPopup = document.getElementById('musicPopup');
         let isPlaying = false;
 
-        // Try autoplay when page loads
-        window.addEventListener('load', function() {
-            music.volume = 0.5;
-            
-            const playPromise = music.play();
-            
-            if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    // Autoplay succeeded!
-                    isPlaying = true;
-                    musicBtn.textContent = '🔊';
-                    musicBtn.classList.add('playing');
-                    // Hide popup after 3 seconds if music is playing
-                    setTimeout(() => {
-                        musicPopup.classList.add('hide');
-                    }, 3000);
-                }).catch(error => {
-                    // Autoplay blocked - popup stays visible
-                    console.log('Click the button to play music!');
-                });
-            }
-        });
-
-        // Manual play/pause control
         musicBtn.addEventListener('click', function() {
-            // Hide popup when button is clicked
             musicPopup.classList.add('hide');
             
             if (!isPlaying) {
                 music.play();
-                musicBtn.textContent = '🔊';
                 musicBtn.classList.add('playing');
                 isPlaying = true;
             } else {
                 music.pause();
-                musicBtn.textContent = '🔇';
                 musicBtn.classList.remove('playing');
                 isPlaying = false;
             }
         });
     </script>
 </body>
-</html>
+    </html>
