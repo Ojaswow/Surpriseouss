@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Subject</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ffeef8 0%, #ffe0f0 50%, #ffd4e8 100%);
+            overflow-x: hidden;
+            overflow-y: auto;
+            font-family: 'Georgia', serif;
+            padding: 20px;
+            position: relative;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            padding: clamp(30px, 5vw, 60px);
+            box-shadow: 0 20px 60px rgba(216, 27, 96, 0.2);
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            z-index: 10;
+            border: 3px solid rgba(216, 27, 96, 0.1);
+            opacity: 0;
+            animation: cardAppear 1s ease 0.3s forwards;
+            margin: auto;
+        }
+
+        @keyframes cardAppear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+        }
+
+        .corner-decoration {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            opacity: 0.3;
+        }
+
+        .top-left {
+            top: -10px;
+            left: -10px;
+            border-top: 4px solid #d81b60;
+            border-left: 4px solid #d81b60;
+            border-radius: 30px 0 0 0;
+        }
+
+        .top-right {
+            top: -10px;
+            right: -10px;
+            border-top: 4px solid #d81b60;
+            border-right: 4px solid #d81b60;
+            border-radius: 0 30px 0 0;
+        }
+
+        .bottom-left {
+            bottom: -10px;
+            left: -10px;
+            border-bottom: 4px solid #d81b60;
+            border-left: 4px solid #d81b60;
+            border-radius: 0 0 0 30px;
+        }
+
+        .bottom-right {
+            bottom: -10px;
+            right: -10px;
+            border-bottom: 4px solid #d81b60;
+            border-right: 4px solid #d81b60;
+            border-radius: 0 0 30px 0;
+        }
+
+        .cake-icon {
+            font-size: clamp(3rem, 8vw, 5rem);
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeInScale 0.8s ease 0.8s forwards;
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        h1 {
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            color: #d81b60;
+            margin-bottom: 15px;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 1.2s forwards;
+            font-weight: normal;
+            letter-spacing: 2px;
+        }
+
+        .name {
+            display: block;
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            background: linear-gradient(135deg, #d81b60, #ec407a, #f48fb1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+            margin-bottom: 25px;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 1.6s forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message {
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            color: #880e4f;
+            line-height: 1.8;
+            font-style: italic;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 2s forwards;
+            margin-bottom: 20px;
+        }
+
+        .divider {
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #d81b60, transparent);
+            margin: 25px auto;
+            opacity: 0;
+            animation: fadeIn 0.8s ease 2.4s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .wish {
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            color: #ad1457;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 2.8s forwards;
+        }
+
+        .petal {
+            position: fixed;
+            width: 12px;
+            height: 12px;
+            background: radial-gradient(circle at 30% 30%, #ffcdd2, #f8bbd0);
+            border-radius: 50% 0 50% 0;
+            opacity: 0.6;
+            animation: fall linear infinite;
+            will-change: transform;
+            pointer-events: none;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-10vh) rotate(0deg);
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .petal:nth-child(2n) {
+            border-radius: 0 50% 0 50%;
+        }
+
+        .sparkle-dot {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #d81b60;
+            border-radius: 50%;
+            animation: sparkle 3s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scale(1);
+            }
+        }
+
+        .ribbon {
+            position: fixed;
+            width: 200px;
+            height: 40px;
+            animation: ribbonFloat 6s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .ribbon::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                rgba(236, 64, 122, 0.7) 0%,
+                rgba(244, 143, 177, 0.8) 50%,
+                rgba(236, 64, 122, 0.7) 100%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            box-shadow: 0 5px 15px rgba(216, 27, 96, 0.3);
+        }
+
+        .ribbon::after {
+            content: '';
+            position: absolute;
+            width: 90%;
+            height: 70%;
+            left: 5%;
+            top: 15%;
+            background: linear-gradient(135deg,
+                rgba(255, 255, 255, 0.3) 0%,
+                transparent 50%,
+                rgba(255, 255, 255, 0.2) 100%);
+            border-radius: 50%;
+        }
+
+        @keyframes ribbonFloat {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-15px) rotate(3deg);
+            }
+            50% {
+                transform: translateY(0) rotate(-2deg);
+            }
+            75% {
+                transform: translateY(-10px) rotate(2deg);
+            }
+        }
+
+        .ribbon-1 {
+            top: 10%;
+            left: -50px;
+            animation-delay: 0s;
+        }
+
+        .ribbon-2 {
+            top: 25%;
+            right: -80px;
+            animation-delay: 1.5s;
+        }
+
+        .ribbon-3 {
+            bottom: 20%;
+            left: -60px;
+            animation-delay: 3s;
+        }
+
+        .ribbon-4 {
+            bottom: 10%;
+            right: -70px;
+            animation-delay: 4.5s;
+        }
+
+        .neon-strip {
+            position: fixed;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(180deg,
+                transparent 0%,
+                rgba(216, 27, 96, 0.3) 20%,
+                rgba(236, 64, 122, 0.5) 50%,
+                rgba(216, 27, 96, 0.3) 80%,
+                transparent 100%);
+            animation: neonPulse 4s ease-in-out infinite;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        @keyframes neonPulse {
+            0%, 100% {
+                opacity: 0.4;
+                box-shadow: 0 0 5px rgba(236, 64, 122, 0.2);
+            }
+            50% {
+                opacity: 0.8;
+                box-shadow: 0 0 15px rgba(236, 64, 122, 0.4);
+            }
+        }
+
+        .strip-left {
+            left: 5%;
+            animation-delay: 0s;
+        }
+
+        .strip-right {
+            right: 5%;
+            animation-delay: 2s;
+        }
+
+        /* Music button styles */
+        .music-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #d81b60, #ec407a);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 5px 20px rgba(216, 27, 96, 0.4);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            animation: fadeIn 1s ease 3s forwards;
+            opacity: 0;
+        }
+
+        .music-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(216, 27, 96, 0.6);
+        }
+
+        .music-btn:active {
+            transform: scale(0.95);
+        }
+
+        .music-btn.playing {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 5px 20px rgba(216, 27, 96, 0.4);
+            }
+            50% {
+                box-shadow: 0 5px 30px rgba(216, 27, 96, 0.8);
+            }
+        }
+
+        /* Cute popup tooltip */
+        .music-popup {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            background: white;
+            padding: 15px 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            opacity: 0;
+            animation: popupBounce 0.6s ease 3.5s forwards;
+            pointer-events: none;
+        }
+
+        .music-popup::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            right: 30px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid white;
+        }
+
+        .music-popup p {
+            margin: 0;
+            color: #d81b60;
+            font-size: 0.95rem;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .music-popup.hide {
+            animation: popupFadeOut 0.4s ease forwards;
+        }
+
+        @keyframes popupBounce {
+            0% {
+                opacity: 0;
+                transform: translateY(10px) scale(0.8);
+            }
+            60% {
+                opacity: 1;
+                transform: translateY(-5px) scale(1.05);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes popupFadeOut {
+            to {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="corner-decoration top-left"></div>
+        <div class="corner-decoration top-right"></div>
+        <div class="corner-decoration bottom-left"></div>
+        <div class="corner-decoration bottom-right"></div>
+        
+        <div class="cake-icon">🎂</div>
+        
+        <h1>Happy Birthday</h1>
+        <span class="name">Subject</span>
+        
+        <div class="divider"></div>
+        
+        <p class="message">
+            Wishing you a day filled with love, laughter,<br>
+            and all the wonderful things you deserve!
+        </p>
+        
+        <div class="divider"></div>
+        
+        <p class="wish">May this year bring you endless joy and success! ✨(Greetings by Ojas✌️)</p>
+    </div>
+
+    <!-- Neon strips -->
+    <div class="neon-strip strip-left"></div>
+    <div class="neon-strip strip-right"></div>
+    
+    <!-- Flowing ribbons -->
+    <div class="ribbon ribbon-1"></div>
+    <div class="ribbon ribbon-2"></div>
+    <div class="ribbon ribbon-3"></div>
+    <div class="ribbon ribbon-4"></div>
+
+    <!-- Background Music (autoplay now works because of intro page interaction!) -->
+    <audio id="bgMusic" autoplay loop>
+        <source src="Montagem Miau.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Cute Music Popup -->
+    <div class="music-popup" id="musicPopup">
+        <p>🎵 Click for music!</p>
+    </div>
+
+    <!-- Music Control Button -->
+    <button class="music-btn" id="musicBtn">🎵</button>
+
+    <script>
+        // Create 10 smooth falling petals
+        for (let i = 0; i < 10; i++) {
+            const petal = document.createElement('div');
+            petal.className = 'petal';
+            petal.style.left = Math.random() * 100 + '%';
+            petal.style.animationDuration = (Math.random() * 4 + 10) + 's';
+            petal.style.animationDelay = Math.random() * 5 + 's';
+            document.body.appendChild(petal);
+        }
+
+        // Create 8 sparkle dots around the card
+        const card = document.querySelector('.card');
+        for (let i = 0; i < 8; i++) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle-dot';
+            sparkle.style.left = (Math.random() * 80 + 10) + '%';
+            sparkle.style.top = (Math.random() * 80 + 10) + '%';
+            sparkle.style.animationDelay = Math.random() * 3 + 's';
+            card.appendChild(sparkle);
+        }
+
+        // Music control
+        const music = document.getElementById('bgMusic');
+        const musicBtn = document.getElementById('musicBtn');
+        const musicPopup = document.getElementById('musicPopup');
+        let isPlaying = false;
+
+        // Try autoplay when page loads
+        window.addEventListener('load', function() {
+            music.volume = 0.5;
+            
+            const playPromise = music.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    // Autoplay succeeded!
+                    isPlaying = true;
+                    musicBtn.textContent = '🔊';
+                    musicBtn.classList.add('playing');
+                    // Hide popup after 3 seconds if music is playing
+                    setTimeout(() => {
+                        musicPopup.classList.add('hide');
+                    }, 3000);
+                }).catch(error => {
+                    // Autoplay blocked - popup stays visible
+                    console.log('Click the button to play music!');
+                });
+            }
+        });
+
+        // Manual play/pause control
+        musicBtn.addEventListener('click', function() {
+            // Hide popup when button is clicked
+            musicPopup.classList.add('hide');
+            
+            if (!isPlaying) {
+                music.play();
+                musicBtn.textContent = '🔊';
+                musicBtn.classList.add('playing');
+                isPlaying = true;
+            } else {
+                music.pause();
+                musicBtn.textContent = '🔇';
+                musicBtn.classList.remove('playing');
+                isPlaying = false;
+            }
+        });
+    </script>
+</body>
+</html>
